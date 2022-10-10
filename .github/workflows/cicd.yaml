@@ -34,20 +34,20 @@
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-        - name: Decode Keystore
-          id: decode_keystore
-          uses: timheuer/base64-to-file@v1
-          with:
-            fileName: 'keystore/keystore.jks'
-            encodedString: ${{ secrets.KEYSTORE }}
+#        - name: Decode Keystore
+#          id: decode_keystore
+#          uses: timheuer/base64-to-file@v1
+#          with:
+#            fileName: 'keystore/keystore.jks'
+#            encodedString: ${{ secrets.KEYSTORE }}
 
         - name: Setup Android signing
-          run: (echo ${{ secrets.KEYSTORE }} | base64 — decode) > TestGithubActions.Droid/keystore/keystore.jks
+          run: (echo ${{ secrets.KEYSTORE }} | base64 — decode) > ./TestGithubActions/TestGithubActions.Droid/keystore.jks
 
         - name: Update iOS version Info.plist
           uses: damienaicheh/update-ios-version-info-plist-action@v1.0.0
           with:
-            info-plist-path: "TestGithubActions.iOS/Info.plist"
+            info-plist-path: "./TestGithubActions/TestGithubActions.iOS/Info.plist"
             bundle-short-version-string: ${{ secrets.APP_VERSION }}
             bundle-version: ${{ github.run_number }}"
             print-file: true
@@ -75,4 +75,4 @@
             /p:AndroidSigningKeyPass=${{ secrets.KEYSTORE_PASSWORD }}
             /p:AndroidSigningKeyStore=keystore.jks
             /p:AndroidSigningStorePass=${{ secrets.KEYSTORE_PASSWORD }}
-            ./TestGithubActions.Droid/TestGithubActions.Droid.csproj
+            ./TestGithubActions/TestGithubActions.Droid/TestGithubActions.Droid.csproj
