@@ -34,8 +34,15 @@
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
+        - name: Decode Keystore
+          id: decode_keystore
+          uses: timheuer/base64-to-file@v1
+          with:
+            fileName: 'keystore/keystore.jks'
+            encodedString: ${{ secrets.KEYSTORE }}
+
         - name: Setup Android signing
-          run: (echo ${{ secrets.KEYSTORE }} | base64 — decode) > ./TestGithubActions.Droid/keystore.jks
+          run: (echo ${{ secrets.KEYSTORE }} | base64 — decode) > ./TestGithubActions.Droid/keystore/keystore.jks
 
         - name: Update iOS version Info.plist
           uses: damienaicheh/update-ios-version-info-plist-action@v1.0.0
