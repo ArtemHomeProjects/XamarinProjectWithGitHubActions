@@ -14,7 +14,6 @@
 		<AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
 		<MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
 		<MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-		<AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
 		<TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
 		<AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
 	</PropertyGroup>
@@ -66,7 +65,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\TestGithubActions\TestGithubActions.csproj">
-			<Project>{BD5ACF5A-620B-4FC6-9AC4-0D511870AB60}</Project>
+			<Project>{C5D77F6E-9D78-43DB-AD58-192BCEF5B856}</Project>
 			<Name>TestGithubActions</Name>
 		</ProjectReference>
 	</ItemGroup>
