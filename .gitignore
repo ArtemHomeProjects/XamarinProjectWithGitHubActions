@@ -474,5 +474,4 @@ FodyWeavers.xsd
 .history/
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Rider,VisualStudio,VisualStudioCode
-TestGithubActions.iOS/.DS_Store
-
+.DS_Store
