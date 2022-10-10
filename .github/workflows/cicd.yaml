@@ -35,7 +35,7 @@
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
         - name: Setup Android signing
-          run: (echo ${{ secrets.KEYSTORE }} | base64 — decode) > ./TestGithubActions.Droid/testGithubActions.keystore.jks
+          run: (echo ${{ secrets.KEYSTORE }} | base64 — decode) > ./TestGithubActions.Droid/keystore.jks
 
         - name: Update iOS version Info.plist
           uses: damienaicheh/update-ios-version-info-plist-action@v1.0.0
@@ -64,7 +64,7 @@
             /p:Configuration=Release
             /p:AndroidPackageFormat=apk
             /p:AndroidKeyStore=true
-            /p:AndroidSigningKeyAlias=testgithubactions
+            /p:AndroidSigningKeyAlias=${{ secrets.KEYSTORE_ALIAS }
             /p:AndroidSigningKeyPass=${{ secrets.KEYSTORE_PASSWORD }}
             /p:AndroidSigningKeyStore=keystore.jks
             /p:AndroidSigningStorePass=${{ secrets.KEYSTORE_PASSWORD }}
