@@ -34,13 +34,6 @@
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-#        - name: Decode Keystore
-#          id: decode_keystore
-#          uses: timheuer/base64-to-file@v1
-#          with:
-#            fileName: 'keystore/keystore.jks'
-#            encodedString: ${{ secrets.KEYSTORE }}
-
         - name: Setup Android signing
           run: (echo ${{ secrets.KEYSTORE }} | base64 - decode) > ./TestGithubActions.Droid/keystore.jks
 
@@ -55,6 +48,9 @@
         - name: Set Android version
           uses: damienaicheh/update-android-version-manifest-action@v1.0.0
           with:
+            uses: ./
+              with:
+                android-manifest-path: './samples/AndroidManifest.xml'
             android-manifest-path: ./TestGithubActions.Droid/Properties/AndroidManifest.xml
             version-name: ${{ secrets.APP_VERSION }}
             version-code: ${{ github.run_number }}
