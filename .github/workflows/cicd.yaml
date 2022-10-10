@@ -64,7 +64,7 @@
             /p:Configuration=Release
             /p:AndroidPackageFormat=apk
             /p:AndroidKeyStore=true
-            /p:AndroidSigningKeyAlias=${{ secrets.KEYSTORE_ALIAS }
+            /p:AndroidSigningKeyAlias=${{ secrets.KEYSTORE_ALIAS }}
             /p:AndroidSigningKeyPass=${{ secrets.KEYSTORE_PASSWORD }}
             /p:AndroidSigningKeyStore=keystore.jks
             /p:AndroidSigningStorePass=${{ secrets.KEYSTORE_PASSWORD }}
