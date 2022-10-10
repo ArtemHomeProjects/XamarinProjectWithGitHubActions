@@ -72,4 +72,4 @@
             /p:AndroidSigningKeyPass=${{ secrets.KEYSTORE_PASSWORD }}
             /p:AndroidSigningKeyStore=keystore.jks
             /p:AndroidSigningStorePass=${{ secrets.KEYSTORE_PASSWORD }}
-            ./TestGithubActions/TestGithubActions.Droid/TestGithubActions.Droid.csproj
+            ./TestGithubActions.Droid/TestGithubActions.Droid.csproj
