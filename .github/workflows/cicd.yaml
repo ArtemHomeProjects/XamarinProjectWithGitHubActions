@@ -37,10 +37,13 @@
         - name: Setup Android signing
           run: (echo ${{ secrets.KEYSTORE }} | base64 — decode) > ./TestGithubActions.Droid/keystore.jks
 
-        - name: Set iOS version
-          run: |
-          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${{ secrets.APP_VERSION }}" ./TestGithubActions.iOS/Info.plist
-          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${{ github.run_number }}" ./TestGithubActions.iOS/Info.plist
+        - name: Update iOS version Info.plist
+          uses: damienaicheh/update-ios-version-info-plist-action@v1.0.0
+          with:
+            info-plist-path: "./TestGithubActions.iOS/Info.plist"
+            bundle-short-version-string: ${{ secrets.APP_VERSION }}
+            bundle-version: ${{ github.run_number }}"
+            print-file: true
 
         - name: Set Android version
           uses: damienaicheh/update-android-version-manifest-action@v1.0.0
