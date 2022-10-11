@@ -62,14 +62,14 @@
             /p:BuildIpa=true
             ./TestGithubActions.iOS/TestGithubActions.iOS.csproj
 
-        - name: Build Android
-          run: MSBuild
-            /t:SignAndroidPackage
-            /p:Configuration=Release
-            /p:AndroidPackageFormat=apk
-            /p:AndroidKeyStore=true
-            /p:AndroidSigningKeyAlias=${{ secrets.KEYSTORE_ALIAS }}
-            /p:AndroidSigningKeyPass=${{ secrets.KEYSTORE_PASSWORD }}
-            /p:AndroidSigningKeyStore=keystore.jks
-            /p:AndroidSigningStorePass=${{ secrets.KEYSTORE_PASSWORD }}
-            ./TestGithubActions.Droid/TestGithubActions.Droid.csproj
+#        - name: Build Android
+#          run: MSBuild
+#            /t:SignAndroidPackage
+#            /p:Configuration=Release
+#            /p:AndroidPackageFormat=apk
+#            /p:AndroidKeyStore=true
+#            /p:AndroidSigningKeyAlias=${{ secrets.KEYSTORE_ALIAS }}
+#            /p:AndroidSigningKeyPass=${{ secrets.KEYSTORE_PASSWORD }}
+#            /p:AndroidSigningKeyStore=keystore.jks
+#            /p:AndroidSigningStorePass=${{ secrets.KEYSTORE_PASSWORD }}
+#            ./TestGithubActions.Droid/TestGithubActions.Droid.csproj
