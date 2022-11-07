@@ -40,7 +40,18 @@
 
   jobs:
     build:
-      runs-on: macos-latest
+      build:
+        name: Setup Xamarin and Mono versions
+        runs-on: macos-latest
+        steps:
+          - name: setup-xamarin
+            uses: maxim-lobanov/setup-xamarin@v1
+            with:
+              mono-version: '6.6' # specify version in '<major>.<minor>' format
+              xamarin-ios-version: latest # specify version in '<major>' format
+              xamarin-mac-version: latest # specify 'latest' keyword to pick up the latest available version
+              xamarin-android-version: '10.1.3.7' # specify full version; it is not recomended option because your pipeline can be broken suddenly in future
+              xcode-version: latest # set the latest available Xcode 11
 
       steps:
         - name: Checkout
@@ -62,8 +73,8 @@
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-        - name: Setup Android signing
-          run: (echo ${{ secrets.KEYSTORE }} | base64 - decode) > ./TestGithubActions.Droid/keystore.jks
+#        - name: Setup Android signing
+#          run: (echo ${{ secrets.KEYSTORE }} | base64 - decode) > ./TestGithubActions.Droid/keystore.jks
 
 #        - name: Update iOS version Info.plist
 #          uses: damienaicheh/update-ios-version-info-plist-action@v1.0.0
@@ -81,12 +92,12 @@
               done
               sed -i '' -e 's/\(\([0-9]\{1,\}\.\)\{1,\}\)\([0-9]\)/\1'"$GITHUB_RUN_NUMBER"'/g' */Properties/AssemblyInfo.cs
 
-        - name: Set Android version
-          uses: damienaicheh/update-android-version-manifest-action@v1.0.0
-          with:
-            android-manifest-path: ./TestGithubActions.Droid/Properties/AndroidManifest.xml
-            version-name: ${{ secrets.APP_VERSION }}
-            version-code: ${{ github.run_number }}
+#        - name: Set Android version
+#          uses: damienaicheh/update-android-version-manifest-action@v1.0.0
+#          with:
+#            android-manifest-path: ./TestGithubActions.Droid/Properties/AndroidManifest.xml
+#            version-name: ${{ secrets.APP_VERSION }}
+#            version-code: ${{ github.run_number }}
 
         - name: Restore NuGet packages
           run: nuget restore
