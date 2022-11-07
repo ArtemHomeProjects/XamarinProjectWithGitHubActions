@@ -9,19 +9,34 @@
   # you to trigger the workflow manually.  
     workflow_dispatch:
       inputs:
-        name:
+        buildConfiguration:
           type: choice
-          description: Who to greet
+          description: Choose a holder
           options:
-            - monalisa
-            - cschleiden
-        message:
+            - Debug
+            - Release
+            - AAPharmaDEV
+            - AAPharmaProd
+            - AAPharmaDEMO
+            - AAPharmaVAL
+            - GSIRProd
+            - GSIRDev
+            - GSIRVal
+            - AAPharmaDev
+            - MMMPharmaVal
+            - MMMPharmaProd
+            - MMMPharmaDev
+            - MMMPharmaDemo
+            - AAPharmaDemo
+            - IndiviorDev
+            - IndiviorVal
+            - ReportumDev
+            - ReportumProd
+            - ReportumVal
+            - BayerDev
+            - BayerProd
+            - BayerVal
           required: true
-        use-emoji:
-          type: boolean
-          description: Include  emojis
-        environment:
-          type: environment
 
   jobs:
     build:
@@ -79,7 +94,7 @@
         - name: Build iOS
           run: MSBuild
             /t:Build
-            /p:Configuration=Release
+            /p:Configuration=${{ github.event.inputs.buildConfiguration }}
             /p:Platform=iPhone
             /p:BuildIpa=true
             ./TestGithubActions.iOS/TestGithubActions.iOS.csproj
@@ -87,7 +102,7 @@
         - name: 'Upload app to TestFlight'
           uses: apple-actions/upload-testflight-build@v1
           with:
-            app-path: './TestGithubActions.iOS/bin/iPhone/Release/TestGithubActions.iOS.ipa'
+            app-path: './TestGithubActions.iOS/bin/iPhone/${{ github.event.inputs.buildConfiguration }}/TestGithubActions.iOS.ipa'
             issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
