@@ -82,6 +82,9 @@
             /p:BuildIpa=true
             ./TestGithubActions.iOS/TestGithubActions.iOS.csproj
 
+        - name: Test with the dotnet CLI
+          run: dotnet test
+
         - name: 'Upload app to TestFlight'
           uses: apple-actions/upload-testflight-build@v1
           with:
