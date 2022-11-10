@@ -106,25 +106,17 @@
 #            version-name: ${{ secrets.APP_VERSION }}
 #            version-code: ${{ github.run_number }}
 
-        - name: Restore NuGet packages
-          run: nuget restore
-
         - name: Setup .NET Core
           uses: actions/setup-dotnet@v1
           with:
             dotnet-version: 3.1.301
 
-        - name: unit test
-          run: |
-            $files = @()
-            Get-ChildItem -Path ${{ github.workspace }}  -Recurse -Filter "*.Tests.dll" | Where-Object {$_.Directory.FullName.Contains("\bin\${{ github.event.inputs.buildConfiguration }}")} | ForEach-Object {$files+=$_.Directory.FullName+"\"+$_.Name}          
-            Write-Host $files  
-            if ($files -eq "")
-            {
-            echo "No unit tests have been detected."
-            } else {
-            & vstest.console.exe $files /EnableCodeCoverage  /ResultsDirectory:${{ github.workspace }}\TestResults
-            }
+        - name: Restore NuGet packages
+          run: dotnet restore
+        - name: Build
+          run: dotnet build --configuration ${{ github.event.inputs.buildConfiguration }} --no-restore
+        - name: Test
+          run: dotnet test --no-restore --verbosity normal
 
         - name: Build iOS
           run: MSBuild
