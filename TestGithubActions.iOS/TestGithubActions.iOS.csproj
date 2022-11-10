@@ -64,7 +64,7 @@
 		<WarningLevel>4</WarningLevel>
 		<MtouchArch>ARM64</MtouchArch>
 		<ConsolePause>false</ConsolePause>
-		<CodesignKey>Apple Distribution: My Meds and Me Limited (F46TNKHU48)</CodesignKey>
+		<CodesignKey>iPhone Distribution</CodesignKey>
 		<CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
 		<MtouchLink>SdkOnly</MtouchLink>
 		<CodesignProvision>Wildcard AppStore (Distribution)</CodesignProvision>
