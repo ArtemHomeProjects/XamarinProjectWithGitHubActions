@@ -108,12 +108,6 @@
 
         - name: Restore NuGet packages
           run: nuget restore
-        - name: Setup .NET Core
-          uses: actions/setup-dotnet@v1
-          with:
-            dotnet-version: 3.1.301
-        - name: Tests
-          run: dotnet test --no-restore --verbosity normal
 
         - name: Build iOS
           run: MSBuild
@@ -122,6 +116,13 @@
             /p:Platform=iPhone
             /p:BuildIpa=true
             ./TestGithubActions.iOS/TestGithubActions.iOS.csproj
+            
+        - name: Setup .NET Core
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: 3.1.301
+        - name: Tests
+          run: dotnet test --no-restore --verbosity normal
 
         - name: 'Upload app to TestFlight'
           uses: apple-actions/upload-testflight-build@v1
