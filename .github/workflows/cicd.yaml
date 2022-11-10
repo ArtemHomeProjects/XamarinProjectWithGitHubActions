@@ -47,11 +47,11 @@
         - name: setup-xamarin
           uses: maxim-lobanov/setup-xamarin@v1
           with:
-            mono-version: '6.12.0.188' # specify version in '<major>.<minor>' format
+            mono-version: latest # specify version in '<major>.<minor>' format
             xamarin-ios-version: latest # specify version in '<major>' format
             xamarin-mac-version: latest # specify 'latest' keyword to pick up the latest available version
             xamarin-android-version: latest # specify full version; it is not recomended option because your pipeline can be broken suddenly in future
-            xcode-version: '14.x' # set the latest available Xcode 11
+            xcode-version: '14.0' # set the latest available Xcode 11
             
         - name: Checkout
           uses: actions/checkout@v2
@@ -87,8 +87,8 @@
           uses: damienaicheh/update-ios-version-info-plist-action@v1.0.0
           with:
             info-plist-path: "./TestGithubActions.iOS/Info.plist"
-            bundle-short-version-string: "2.3"
-            bundle-version: "1"
+            bundle-short-version-string: "2.3.5"
+            bundle-version: "2.3"
             print-file: true
 
 #        - name: Update iOS version Info.plist
@@ -105,11 +105,6 @@
 #            android-manifest-path: ./TestGithubActions.Droid/Properties/AndroidManifest.xml
 #            version-name: ${{ secrets.APP_VERSION }}
 #            version-code: ${{ github.run_number }}
-
-        - name: Setup .NET Core
-          uses: actions/setup-dotnet@v1
-          with:
-            dotnet-version: 3.1.301
 
         - name: Restore NuGet packages
           run: dotnet restore
