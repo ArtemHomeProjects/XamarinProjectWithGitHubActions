@@ -65,7 +65,6 @@
 		<ConsolePause>false</ConsolePause>
 		<CodesignKey>Apple Distribution: My Meds and Me Limited (F46TNKHU48)</CodesignKey>
 		<CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-		<CodesignProvision>Wildcard AppStore (Distribution)</CodesignProvision>
 		<MtouchLink>SdkOnly</MtouchLink>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
