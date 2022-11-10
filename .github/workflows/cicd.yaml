@@ -41,12 +41,17 @@
 
   jobs:
     build:
-      runs-on: macos-latest
+      name: Setup Xamarin and Mono versions
+      runs-on: macos-12
       steps:
-        - name: Setup Xamarin and Mono versions              
-          uses: maxim-lobanov/setup-xcode@v1
+        - name: setup-xamarin
+          uses: maxim-lobanov/setup-xamarin@v1
           with:
-            xcode-version: '14.1'
+            mono-version: latest # specify version in '<major>.<minor>' format
+            xamarin-ios-version: latest # specify version in '<major>' format
+            xamarin-mac-version: latest # specify 'latest' keyword to pick up the latest available version
+            xamarin-android-version: latest # specify full version; it is not recomended option because your pipeline can be broken suddenly in future
+            xcode-version: '14.x' # set the latest available Xcode 11
             
         - name: Checkout
           uses: actions/checkout@v2
