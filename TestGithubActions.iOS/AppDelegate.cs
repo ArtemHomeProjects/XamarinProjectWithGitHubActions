@@ -1,6 +1,5 @@
 ﻿using Foundation;
 using UIKit;
-using Xamarin.Forms.Platform.iOS;
 
 namespace TestGithubActions.iOS
 {
@@ -8,7 +7,7 @@ namespace TestGithubActions.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : FormsApplicationDelegate
+    public partial class AppDelegate : Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
