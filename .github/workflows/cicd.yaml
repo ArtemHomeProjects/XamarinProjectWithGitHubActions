@@ -118,6 +118,7 @@
             ./TestGithubActions.iOS/TestGithubActions.iOS.csproj
 
         - name: unit test
+          shell: bash
           uses: RachelGanonNew/Run-All-.Net-Unit-Test@main
 
         - name: 'Upload app to TestFlight'
