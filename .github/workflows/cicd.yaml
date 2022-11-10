@@ -41,7 +41,7 @@
 
   jobs:
     build:
-      runs-on: macos-latest
+      runs-on: macos-12
       steps:
         - name: setup-xamarin
           uses: maxim-lobanov/setup-xamarin@v1.2
