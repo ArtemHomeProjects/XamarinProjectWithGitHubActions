@@ -50,10 +50,11 @@
 		<WarningLevel>4</WarningLevel>
 		<ConsolePause>false</ConsolePause>
 		<MtouchArch>ARM64</MtouchArch>
-		<CodesignKey>iPhone Developer</CodesignKey>
+		<CodesignKey>Apple Distribution: My Meds and Me Limited (F46TNKHU48)</CodesignKey>
 		<MtouchDebug>true</MtouchDebug>
 		<CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
 		<MtouchLink>SdkOnly</MtouchLink>
+		<CodesignProvision>Wildcard AppStore (Distribution)</CodesignProvision>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
 		<DebugType>none</DebugType>

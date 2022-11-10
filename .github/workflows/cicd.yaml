@@ -108,8 +108,11 @@
 
         - name: Restore NuGet packages
           run: nuget restore
-
-        - name: Test
+        - name: Setup .NET Core
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: 3.1.301
+        - name: Tests
           run: dotnet test --no-restore --verbosity normal
 
         - name: Build iOS
