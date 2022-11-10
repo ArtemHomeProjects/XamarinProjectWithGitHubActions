@@ -109,6 +109,9 @@
         - name: Restore NuGet packages
           run: nuget restore
 
+        - name: Test
+          run: dotnet test --no-restore --verbosity normal
+
         - name: Build iOS
           run: MSBuild
             /t:Build
