@@ -118,8 +118,17 @@
             ./TestGithubActions.iOS/TestGithubActions.iOS.csproj
 
         - name: unit test
-          shell: bash
-          uses: RachelGanonNew/Run-All-.Net-Unit-Test@main
+          run: |
+            $files = @()
+            Get-ChildItem -Path ${{ github.workspace }}  -Recurse -Filter "*.Tests.dll" | Where-Object {$_.Directory.FullName.Contains("\bin\${{ github.event.inputs.buildConfiguration }}")} | ForEach-Object {$files+=$_.Directory.FullName+"\"+$_.Name}          
+            Write-Host $files  
+            
+            if ($files -eq "")
+            {
+            echo "No unit tests have been detected."
+            } else {
+            & vstest.console.exe $files /EnableCodeCoverage  /ResultsDirectory:${{ github.workspace }}\TestResults
+            }
 
         - name: 'Upload app to TestFlight'
           uses: apple-actions/upload-testflight-build@v1
