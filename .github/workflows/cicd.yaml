@@ -113,11 +113,6 @@
 
         - name: Restore NuGet packages
           run: dotnet restore
-        - name: Build
-          run: dotnet build
-        - name: Test with the dotnet CLI
-          run: dotnet test
-
         - name: Build iOS
           run: MSBuild
             /t:Build
@@ -125,6 +120,8 @@
             /p:Platform=iPhone
             /p:BuildIpa=true
             ./TestGithubActions.iOS/TestGithubActions.iOS.csproj
+        - name: Test with the dotnet CLI
+          run: dotnet test
 
         - name: 'Upload app to TestFlight'
           uses: apple-actions/upload-testflight-build@v1
