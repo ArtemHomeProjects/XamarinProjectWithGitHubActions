@@ -114,9 +114,9 @@
         - name: Restore NuGet packages
           run: dotnet restore
         - name: Build
-          run: dotnet build --configuration ${{ github.event.inputs.buildConfiguration }} --no-restore
-        - name: Test
-          run: dotnet test --no-restore --verbosity normal
+          run: dotnet build
+        - name: Test with the dotnet CLI
+          run: dotnet test
 
         - name: Build iOS
           run: MSBuild
