@@ -71,24 +71,13 @@
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-        - name: Restore NuGet packages
-          run: nuget restore
-
-        - name: Build iOS
-          run: MSBuild
-            /t:Build
-            /p:Configuration=Release
-            /p:Platform=iPhone
-            /p:BuildIpa=true
-            ./TestGithubActions.iOS/TestGithubActions.iOS.csproj
-
         - name: Setup .NET
           uses: actions/setup-dotnet@v1
           with:
             dotnet-version: 3.x
 
-        - name: Restore dependencies
-          run: dotnet restore Release
+        - name: Restore NuGet packages
+          run: nuget restore
 
         - name: Build
           run: dotnet build Release
