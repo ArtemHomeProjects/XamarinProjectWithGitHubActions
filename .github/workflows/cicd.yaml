@@ -81,19 +81,22 @@
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-        - name: Setup .NET 3.x
-          uses: actions/setup-dotnet@v3
-          with:
-            dotnet-version: '3.x'
-
         - name: Restore NuGet packages
           run: nuget restore
 
-        - name: Build
-          run: dotnet build Release
+        - name: Build iOS
+          run: MSBuild
+            /t:Build
+            /p:Configuration=Release
+            /p:Platform=iPhone
+            /p:BuildIpa=true
+            ./TestGithubActions.iOS/TestGithubActions.iOS.csproj
 
-        - name: Test
-          run: dotnet test Release --logger "trx;LogFileName=test-results.trx" || true
+        - name: Upload build artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            name: iOS Artifacts
+            path: './TestGithubActions.iOS/bin/iPhone/Release/TestGithubActions.iOS.ipa'
 
         - name: 'Upload app to TestFlight'
           uses: apple-actions/upload-testflight-build@v1
