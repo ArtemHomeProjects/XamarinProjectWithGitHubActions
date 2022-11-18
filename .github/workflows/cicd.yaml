@@ -1,10 +1,4 @@
   on:
-    push:
-      branches:
-        - main
-      tags:
-        - RC.*
-
     # This workflow_dispatch allows
     # you to trigger the workflow manually.  
     workflow_dispatch:
@@ -82,6 +76,11 @@
             issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
+            
+        - name: Set iOS version
+          run: |
+            /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${{ github.event.inputs.version }}" ./GitHubActions.iOS/Info.plist
+            /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${{ github.event.inputs.version }}.${{github.run_number}}" ./GitHubActions.iOS/Info.plist
 
         - name: Restore NuGet packages
           run: nuget restore
@@ -89,7 +88,7 @@
         - name: Build iOS
           run: MSBuild
             /t:Build
-            /p:Configuration=Release
+            /p:Configuration=${{ github.event.inputs.buildConfiguration }}
             /p:Platform=iPhone
             /p:BuildIpa=true
             ./TestGithubActions.iOS/TestGithubActions.iOS.csproj
@@ -98,12 +97,12 @@
           uses: actions/upload-artifact@v2
           with:
             name: iOS Artifacts
-            path: './TestGithubActions.iOS/bin/iPhone/Release/TestGithubActions.iOS.ipa'
+            path: './TestGithubActions.iOS/bin/iPhone/${{ github.event.inputs.buildConfiguration }}/TestGithubActions.iOS.ipa'
 
         - name: 'Upload app to TestFlight'
           uses: apple-actions/upload-testflight-build@v1
           with:
-            app-path: './TestGithubActions.iOS/bin/iPhone/Release/TestGithubActions.iOS.ipa'
+            app-path: './TestGithubActions.iOS/bin/iPhone/${{ github.event.inputs.buildConfiguration }}/TestGithubActions.iOS.ipa'
             issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
