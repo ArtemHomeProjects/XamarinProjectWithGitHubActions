@@ -79,8 +79,8 @@
             
         - name: Set iOS version
           run: |
-            /usr/libexec/PlistBuddy -c "Set ApplicationProperties:CFBundleShortVersionString ${{ github.event.inputs.version }}" ./GitHubActions.iOS/Info.plist
-            /usr/libexec/PlistBuddy -c "Set ApplicationProperties:CFBundleVersion ${{ github.event.inputs.version }}.${{github.run_number}}" ./GitHubActions.iOS/Info.plist
+            /usr/libexec/PlistBuddy -c "Set ApplicationProperties:CFBundleShortVersionString ${{ github.event.inputs.version }}" ./TestGithubActions.iOS/Info.plist
+            /usr/libexec/PlistBuddy -c "Set ApplicationProperties:CFBundleVersion ${{ github.event.inputs.version }}.${{github.run_number}}" ./TestGithubActions.iOS/Info.plist
 
         - name: Restore NuGet packages
           run: nuget restore
