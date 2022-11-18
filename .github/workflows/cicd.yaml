@@ -71,10 +71,10 @@
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-        - name: Setup .NET
-          uses: actions/setup-dotnet@v1
+        - name: Setup .NET 3.x
+          uses: actions/setup-dotnet@v3
           with:
-            dotnet-version: 3.x
+            dotnet-version: '3.x'
 
         - name: Restore NuGet packages
           run: nuget restore
