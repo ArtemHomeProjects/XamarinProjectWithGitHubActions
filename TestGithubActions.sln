@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGithubActions.Droid", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGithubActions.iOS", "TestGithubActions.iOS\TestGithubActions.iOS.csproj", "{0462CF0C-5BC9-41AD-A7B3-06AAD53FAD4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{90AE9F34-C62B-46F1-B9F9-496CBDB94C5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1.Test", "TestProject1.Test\TestProject1.Test.csproj", "{90AE9F34-C62B-46F1-B9F9-496CBDB94C5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

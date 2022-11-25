@@ -10,7 +10,6 @@
           default: Release
           description: Choose a holder
           options:
-            - Release
             - AAPharmaDEV
             - AAPharmaProd
             - AAPharmaDEMO
@@ -41,7 +40,7 @@
       steps:
         - uses: actions/checkout@v3
         - name: Run Unit Tests
-          run: dotnet test TestProject1 -v n
+          run: dotnet test TestProject1.Test -v n
 
     Build:
       runs-on: macos-12
