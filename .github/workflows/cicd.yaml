@@ -72,8 +72,8 @@
           with:
             default: "Default bundle"
             conditionals-with-values: |
-              ${{ 'buildConfiguration' == 'Release' }} => com.mymedsandme.*
-              ${{ 'buildConfiguration' == 'AAPharmaDEV' }} => correctAnswer
+              ${{ 'github.event.inputs.buildConfiguration' == 'Release' }} => com.mymedsandme.*
+              ${{ 'github.event.inputs.buildConfiguration' == 'AAPharmaDEV' }} => correctAnswer
 
         - run: echo ${{ steps.switch-case.outputs.value }}
         
