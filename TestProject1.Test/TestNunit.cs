@@ -2,15 +2,11 @@ using NUnit.Framework;
 
 namespace TestProject1
 {
-    public class Tests
+    [TestFixture]
+    public class TestNunit
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
-        public void Test1()
+        public void Convert_WhenApiException_IsNull()
         {
             Assert.Pass();
         }
