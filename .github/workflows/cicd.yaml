@@ -66,11 +66,21 @@
             p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
             keychain: github-actions-xamarin
             keychain-password: ''
+            
+        - uses: dkershner6/switch-case-action@v1
+          id: switch-case
+          with:
+            default: "Default bundle"
+            conditionals-with-values: |
+              ${{ 'buildConfiguration' == 'Release' }} => com.mymedsandme.*
+              ${{ 'buildConfiguration' == 'AAPharmaDEV' }} => correctAnswer
 
+        - run: echo ${{ steps.switch-case.outputs.value }}
+        
         - name: Setup iOS Provisioning Profiles
           uses: apple-actions/download-provisioning-profiles@v1
           with:
-            bundle-id: 'com.mymedsandme.*'
+            bundle-id: '${{ steps.switch-case.outputs.value }}'
             issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
