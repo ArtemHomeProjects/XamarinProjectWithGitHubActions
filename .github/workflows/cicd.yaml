@@ -10,7 +10,6 @@
           default: Release
           description: Choose a holder
           options:
-            - Debug
             - Release
             - AAPharmaDEV
             - AAPharmaProd
@@ -30,6 +29,7 @@
             - ReportumDev
             - ReportumProd
             - ReportumVal
+            - ReportumStg
             - BayerDev
             - BayerProd
             - BayerVal
@@ -68,19 +68,42 @@
             keychain-password: ''
             
         - uses: dkershner6/switch-case-action@v1
-          id: switch-case
+          id: switch-case-bundle
           with:
             default: "Default bundle"
             conditionals-with-values: |
-              ${{ github.event.inputs.buildConfiguration == 'Release' }} => com.mymedsandme.*
-              ${{ 'github.event.inputs.buildConfiguration' == 'AAPharmaDEV' }} => correctAnswer
+              ${{ github.event.inputs.buildConfiguration == 'AAPharmaDemo' }} => com.reportum.aapharma-demo
+              ${{ github.event.inputs.buildConfiguration == 'AAPharmaDev' }} => com.reportum.aapharma-dev
+              ${{ github.event.inputs.buildConfiguration == 'AAPharmaProd' }} => com.reportum.mymedsandme
+              ${{ github.event.inputs.buildConfiguration == 'AAPharmaVAL' }} => com.reportum.aapharma-val
 
-        - run: echo ${{ steps.switch-case.outputs.value }}
+              ${{ github.event.inputs.buildConfiguration == 'BayerDev' }} => com.reportum.safetrack-dev
+              ${{ github.event.inputs.buildConfiguration == 'BayerVal' }} => com.reportum.safetrack-val
+              ${{ github.event.inputs.buildConfiguration == 'BayerProd' }} => com.reportum.safetrack
+
+              ${{ github.event.inputs.buildConfiguration == 'GSIRDev' }} => com.reportum.gsir.dev
+              ${{ github.event.inputs.buildConfiguration == 'GSIRProd' }} => com.reportum.gsir
+              ${{ github.event.inputs.buildConfiguration == 'GSIRVal' }} => com.reportum.gsir.val
+
+              ${{ github.event.inputs.buildConfiguration == 'IndiviorDev' }} => com.reportum.indivior-dev
+              ${{ github.event.inputs.buildConfiguration == 'IndiviorVal' }} => com.reportum.indivior-val
+
+              ${{ github.event.inputs.buildConfiguration == 'MMMPharmaVal' }} => com.reportum.mymedsandme.val
+              ${{ github.event.inputs.buildConfiguration == 'MMMPharmaProd' }} => com.reportum.mymedsandme
+              ${{ github.event.inputs.buildConfiguration == 'MMMPharmaDev' }} => com.reportum.mmmpharma-dev
+              ${{ github.event.inputs.buildConfiguration == 'MMMPharmaDemo' }} => com.reportum.mmmpharma-demo
+
+              ${{ github.event.inputs.buildConfiguration == 'ReportumDev' }} => com.reportum.mymedsandme.dev
+              ${{ github.event.inputs.buildConfiguration == 'ReportumProd' }} => com.reportum.mymedsandme
+              ${{ github.event.inputs.buildConfiguration == 'ReportumVal' }} => com.reportum.mymedsandme.val
+              ${{ github.event.inputs.buildConfiguration == 'ReportumStg' }} => com.reportum.mymedsandme.stg
+
+        - run: echo ${{ steps.switch-case-bundle.outputs.value }}
         
         - name: Setup iOS Provisioning Profiles
           uses: apple-actions/download-provisioning-profiles@v1
           with:
-            bundle-id: '${{ steps.switch-case.outputs.value }}'
+            bundle-id: '${{ steps.switch-case-bundle.outputs.value }}'
             issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
             api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
             api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
