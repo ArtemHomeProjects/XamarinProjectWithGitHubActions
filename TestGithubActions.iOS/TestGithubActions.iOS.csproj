@@ -56,7 +56,9 @@
 		<MtouchLink>SdkOnly</MtouchLink>
 		<CodesignProvision>Wildcard AppStore (Distribution)</CodesignProvision>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+	
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' OR
+	                           '$(Configuration)|$(Platform)' == 'TestNewConfig|iPhone' ">
 		<DebugType>none</DebugType>
 		<Optimize>true</Optimize>
 		<OutputPath>bin\iPhone\Release</OutputPath>
@@ -95,10 +97,6 @@
 		<CodesignKey>iPhone Distribution</CodesignKey>
 		<CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
 		<MtouchLink>SdkOnly</MtouchLink>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'TestNewConfig|iPhone' ">
-	  <OutputPath>bin\iPhone\TestNewConfig\</OutputPath>
-	  <PlatformTarget>iPhone</PlatformTarget>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Include="Main.cs" />
