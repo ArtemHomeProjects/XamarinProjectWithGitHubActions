@@ -89,14 +89,6 @@
             name: iOS Artifacts
             path: './TestGithubActions.iOS/bin/iPhone/${{ github.event.inputs.buildConfiguration }}/TestGithubActions.iOS.ipa'
 
-        - name: 'Upload app to TestFlight'
-          uses: apple-actions/upload-testflight-build@v1
-          with:
-            app-path: './TestGithubActions.iOS/bin/iPhone/${{ github.event.inputs.buildConfiguration }}/TestGithubActions.iOS.ipa'
-            issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-            api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
-            api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
-
     Create_Tag:
       runs-on: ubuntu-latest
       needs: Tests
