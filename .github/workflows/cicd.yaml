@@ -52,7 +52,7 @@
             default: "Default bundle"
             conditionals-with-values: |
               ${{ github.event.inputs.buildConfiguration == 'Release' }} => com.mymedsandme.*
-              ${{ github.event.inputs.buildConfiguration == 'TestNewConfig' }} => 'com.reportum.safetrack-dev'
+              ${{ github.event.inputs.buildConfiguration == 'TestNewConfig' }} => com.reportum.safetrack-dev
 
         - run: echo ${{ steps.switch-case-bundle.outputs.value }}
         
