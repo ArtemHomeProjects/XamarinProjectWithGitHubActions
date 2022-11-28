@@ -39,6 +39,10 @@
 		<AndroidManagedSymbols>true</AndroidManagedSymbols>
 		<AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
 	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'TestNewConfig|iPhone' ">
+	  <OutputPath>bin\iPhone\TestNewConfig\</OutputPath>
+	  <PlatformTarget>iPhone</PlatformTarget>
+	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="FormsViewGroup, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
 		  <HintPath>..\packages\Xamarin.Forms.5.0.0.2515\lib\MonoAndroid10.0\FormsViewGroup.dll</HintPath>

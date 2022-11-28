@@ -6,6 +6,10 @@
 		<IsPackable>false</IsPackable>
 
 		<RootNamespace>TestProject1</RootNamespace>
+
+		<Configurations>Debug;Release;TestNewConfig</Configurations>
+
+		<Platforms>AnyCPU;iPhone</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>
