@@ -39,7 +39,7 @@
 		<AndroidManagedSymbols>true</AndroidManagedSymbols>
 		<AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'TestNewConfig|iPhone' ">
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'TestNewConfig|AnyCPU' ">
 	  <OutputPath>bin\iPhone\TestNewConfig\</OutputPath>
 	  <PlatformTarget>iPhone</PlatformTarget>
 	</PropertyGroup>

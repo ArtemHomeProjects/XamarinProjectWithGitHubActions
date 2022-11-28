@@ -56,7 +56,7 @@
 		<CodesignProvision>Wildcard AppStore (Distribution)</CodesignProvision>
 	</PropertyGroup>
 	
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' OR&#xA;	                           '$(Configuration)|$(Platform)' == 'TestNewConfig|iPhone' ">
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' OR '$(Configuration)|$(Platform)' == 'TestNewConfig|iPhone' ">
 		<DebugType>none</DebugType>
 		<Optimize>true</Optimize>
 		<OutputPath>bin\iPhone\Release</OutputPath>
@@ -95,6 +95,13 @@
 		<CodesignKey>iPhone Distribution</CodesignKey>
 		<CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
 		<MtouchLink>SdkOnly</MtouchLink>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'TestNewConfig|iPhone' ">
+	  <CodesignProvision>Automatic:AppStore</CodesignProvision>
+	  <CodesignKey>Apple Distribution: My Meds and Me Limited (F46TNKHU48)</CodesignKey>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+	  <CodesignProvision>Automatic</CodesignProvision>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Include="Main.cs" />
