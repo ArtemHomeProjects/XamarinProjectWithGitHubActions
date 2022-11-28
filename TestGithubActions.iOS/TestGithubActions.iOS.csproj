@@ -50,7 +50,6 @@
 		<WarningLevel>4</WarningLevel>
 		<ConsolePause>false</ConsolePause>
 		<MtouchArch>ARM64</MtouchArch>
-		<CodesignKey>Apple Distribution: My Meds and Me Limited (F46TNKHU48)</CodesignKey>
 		<MtouchDebug>true</MtouchDebug>
 		<CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
 		<MtouchLink>SdkOnly</MtouchLink>
