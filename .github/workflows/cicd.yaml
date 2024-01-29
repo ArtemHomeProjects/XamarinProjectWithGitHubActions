@@ -126,7 +126,7 @@
         - name: Update AndroidManifest.xml
           uses: damienaicheh/update-android-version-manifest-action@v1.0.0
           with:
-              android-manifest-path: './TestGithubActions/TestGithubActions.Droid/Properties/AndroidManifest.xml'
+              android-manifest-path: './TestGithubActions.Droid/Properties/AndroidManifest.xml'
               version-code: 23
               version-name: ${{ github.event.inputs.version }}.${{github.run_number}}
               print-file: true
@@ -136,7 +136,7 @@
             /t:SignAndroidPackage
             /p:Configuration=Debug
             /p:AndroidPackageFormat=apk
-            ./TestGithubActions/TestGithubActions.Droid/TestGithubActions.Droid.csproj
+            ./TestGithubActions.Droid/TestGithubActions.Droid.csproj
 
             # /p:AndroidKeyStore=true
             # /p:AndroidSigningKeyAlias=githubactionsxamarin
@@ -148,7 +148,7 @@
           uses: actions/upload-artifact@v2
           with:
             name: android-bundle
-            path: './TestGithubActions/TestGithubActions.Droid/bin/${{ github.event.inputs.buildConfiguration }}/**/**.apk'
+            path: './TestGithubActions.Droid/bin/${{ github.event.inputs.buildConfiguration }}/**/**.apk'
 
     # Create_Tag:
     #   runs-on: ubuntu-latest
