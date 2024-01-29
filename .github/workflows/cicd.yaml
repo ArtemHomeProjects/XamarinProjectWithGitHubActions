@@ -57,7 +57,7 @@
         #     p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
         #     keychain: github-actions-xamarin
         #     keychain-password: ''
-        
+
         # - name: Setup iOS Provisioning Profiles
         #   uses: apple-actions/download-provisioning-profiles@v1
         #   with:
