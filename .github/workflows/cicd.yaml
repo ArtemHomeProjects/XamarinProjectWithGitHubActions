@@ -112,7 +112,7 @@
         #     dotnet-version: 8.0.x
   
         - name: Restore NuGet packages
-          run: dotnet restore TestGithubActions/TestGithubActions.Droid/TestGithubActions.Droid.csproj
+          run: dotnet restore ./TestGithubActions.Droid/TestGithubActions.Droid.csproj
   
         # - name: Install Android Sdk platform tools
         #   run: ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools"
