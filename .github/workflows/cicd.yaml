@@ -113,11 +113,6 @@
   
         - name: Restore NuGet packages
           run: dotnet restore ./TestGithubActions.Droid/TestGithubActions.Droid.csproj
-
-        - name: setup-xamarin
-          uses: maxim-lobanov/setup-xamarin@v1.2
-          with:
-            xamarin-android-version: '13'
   
         # - name: Install Android Sdk platform tools
         #   run: ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools"
