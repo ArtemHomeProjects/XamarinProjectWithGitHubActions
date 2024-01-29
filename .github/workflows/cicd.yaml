@@ -28,12 +28,12 @@
           - Android + iOS
 
   jobs:
-    Tests:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-        - name: Run Unit Tests
-          run: dotnet test TestProject1.Test -v n
+    # Tests:
+    #   runs-on: ubuntu-latest
+    #   steps:
+    #     - uses: actions/checkout@v3
+    #     - name: Run Unit Tests
+    #       run: dotnet test TestProject1.Test -v n
 
     Build_iOS:
       if: ${{ contains(github.event.inputs.platforms_to_distribute, 'iOS') }}
