@@ -4,15 +4,28 @@
     workflow_dispatch:
       inputs:
         version:
-          description: new app version x.x.x.
+          description: Specify the version, for example 2.0.x
+          required: true
+
         buildConfiguration:
           type: choice
-          default: Release
-          description: Choose a holder
+          default: Debug
+          description: Choose a configuration
           options:
             - TestNewConfig
             - Release
+            - Debug
           required: true
+
+        platforms_to_distribute:
+          description: Indicates if we should distribute iOS, Android or both of them.
+          required: true
+          default: iOS
+          type: choice
+          options:
+          - Android
+          - iOS
+          - Android + iOS
 
   jobs:
     Tests:
@@ -22,48 +35,37 @@
         - name: Run Unit Tests
           run: dotnet test TestProject1.Test -v n
 
-    Build:
-      runs-on: macos-12
+    Build_iOS:
+      if: ${{ contains(github.event.inputs.platforms_to_distribute, 'iOS') }}
+      runs-on: macos-13
       needs: Tests
       steps:
         - name: setup-xamarin
           uses: maxim-lobanov/setup-xamarin@v1.2
           with:
-            mono-version: '6.12.0.188'
-            xamarin-ios-version: '16.0.0.72'
-            xamarin-mac-version: '8.12.0.2'
-            xamarin-android-version: '13.1.0.1'
-            xcode-version: '14.1'
+            xamarin-ios-version: '17'
+            xamarin-android-version: '14'
+            xcode-version: '15.x'
 
         - name: Checkout
           uses: actions/checkout@v3
 
-        - name: Setup iOS Certificates
-          uses: apple-actions/import-codesign-certs@v1
-          with:
-            p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
-            p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
-            keychain: github-actions-xamarin
-            keychain-password: ''
-            
-        - uses: dkershner6/switch-case-action@v1
-          id: switch-case-bundle
-          with:
-            default: "Default bundle"
-            conditionals-with-values: |
-              ${{ github.event.inputs.buildConfiguration == 'Release' }} => com.mymedsandme.*
-              ${{ github.event.inputs.buildConfiguration == 'TestNewConfig' }} => com.reportum.safetrack-dev
-
-        - run: echo ${{ steps.switch-case-bundle.outputs.value }}
+        # - name: Setup iOS Certificates
+        #   uses: apple-actions/import-codesign-certs@v1
+        #   with:
+        #     p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
+        #     p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+        #     keychain: github-actions-xamarin
+        #     keychain-password: ''
         
-        - name: Setup iOS Provisioning Profiles
-          uses: apple-actions/download-provisioning-profiles@v1
-          with:
-            bundle-id: '${{ steps.switch-case-bundle.outputs.value }}'
-            issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-            api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
-            api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
-          
+        # - name: Setup iOS Provisioning Profiles
+        #   uses: apple-actions/download-provisioning-profiles@v1
+        #   with:
+        #     bundle-id: '${{ steps.switch-case-bundle.outputs.value }}'
+        #     issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+        #     api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
+        #     api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
+
         - name: Update iOS version Info.plist
           uses: damienaicheh/update-ios-version-info-plist-action@v1.1.0
           with:
@@ -89,13 +91,72 @@
             name: iOS Artifacts
             path: './TestGithubActions.iOS/bin/iPhone/${{ github.event.inputs.buildConfiguration }}/TestGithubActions.iOS.ipa'
 
-    Create_Tag:
+    Build_Android:
+      if: ${{ contains(github.event.inputs.platforms_to_distribute, 'Android') }}
       runs-on: ubuntu-latest
-      needs: Tests
       steps:
-        - uses: actions/checkout@v3
+        - name: Checkout
+          uses: actions/checkout@v3
 
-        - name: Create tag
-          uses: rickstaa/action-create-tag@v1.5.0
+        # - name: Decode Keystore
+        #   id: decode_keystore
+        #   uses: timheuer/base64-to-file@v1
+        #   with:
+        #     fileName: ${{secrets.ANDROID_SIGNING_KEY_STORE_NAME}}
+        #     fileDir: Vibrant/Vibrant.Android/
+        #     encodedString: ${{ secrets.ANDROID_KEYSTORE }}
+  
+        # - name: Setup .NET 8 SDK
+        #   uses: actions/setup-dotnet@v2
+        #   with:
+        #     dotnet-version: 8.0.x
+  
+        - name: Restore NuGet packages
+          run: dotnet restore TestGithubActions/TestGithubActions.Droid/TestGithubActions.Droid.csproj
+  
+        # - name: Install Android Sdk platform tools
+        #   run: ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools"
+  
+        # - name: Create android version code
+        #   env:
+        #     NUM: ${{ github.run_number }}
+        #   run: |
+        #     echo "ANDROID_VERSION_CODE=$(($NUM + 60))" >> $GITHUB_ENV
+  
+        - name: Update AndroidManifest.xml
+          uses: damienaicheh/update-android-version-manifest-action@v1.0.0
           with:
-            tag: '${{ github.event.inputs.buildConfiguration }} ${{ github.event.inputs.version }}.${{github.run_number}}'
+              android-manifest-path: './TestGithubActions/TestGithubActions.Droid/Properties/AndroidManifest.xml'
+              version-code: 23
+              version-name: ${{ github.event.inputs.version }}.${{github.run_number}}
+              print-file: true
+
+        - name: Build Android
+          run: MSBuild
+            /t:SignAndroidPackage
+            /p:Configuration=Debug
+            /p:AndroidPackageFormat=apk
+            ./TestGithubActions/TestGithubActions.Droid/TestGithubActions.Droid.csproj
+
+            # /p:AndroidKeyStore=true
+            # /p:AndroidSigningKeyAlias=githubactionsxamarin
+            # /p:AndroidSigningKeyPass=${{ secrets.KEYSTORE_PASSWORD }}
+            # /p:AndroidSigningKeyStore=keystore.jks
+            # /p:AndroidSigningStorePass=${{ secrets.KEYSTORE_PASSWORD }}
+
+        - name: Upload Android artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            name: android-bundle
+            path: './TestGithubActions/TestGithubActions.Droid/bin/${{ github.event.inputs.buildConfiguration }}/**/**.apk'
+
+    # Create_Tag:
+    #   runs-on: ubuntu-latest
+    #   needs: Tests
+    #   steps:
+    #     - uses: actions/checkout@v3
+
+    #     - name: Create tag
+    #       uses: rickstaa/action-create-tag@v1.5.0
+    #       with:
+    #         tag: '${{ github.event.inputs.buildConfiguration }} ${{ github.event.inputs.version }}.${{github.run_number}}'
